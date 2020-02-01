@@ -7,10 +7,7 @@ import com.google.common.collect.Sets;
 import net.demilich.metastone.game.GameContext;
 import net.demilich.metastone.game.Player;
 import net.demilich.metastone.game.actions.BattlecryAction;
-import net.demilich.metastone.game.cards.Card;
-import net.demilich.metastone.game.cards.CardSet;
-import net.demilich.metastone.game.cards.CardType;
-import net.demilich.metastone.game.cards.Rarity;
+import net.demilich.metastone.game.cards.*;
 import net.demilich.metastone.game.cards.dynamicdescription.DynamicDescriptionDesc;
 import net.demilich.metastone.game.entities.Actor;
 import net.demilich.metastone.game.entities.heroes.Hero;
@@ -36,8 +33,6 @@ import net.demilich.metastone.game.spells.trigger.EventTrigger;
 import net.demilich.metastone.game.targeting.EntityReference;
 import net.demilich.metastone.game.targeting.TargetSelection;
 import net.demilich.metastone.game.targeting.Zones;
-import net.demilich.metastone.game.cards.Attribute;
-import net.demilich.metastone.game.cards.AttributeMap;
 
 import java.io.Serializable;
 import java.util.*;
@@ -166,6 +161,8 @@ public final class CardDesc /*extends AbstractMap<CardDescArg, Object>*/ impleme
 	public String[] secondPlayerBonusCards;
 	public TargetSelection targetSelectionOverride;
 	public ConditionDesc targetSelectionCondition;
+	public EmoteMap emotes;
+
 	public CardDesc() {
 		super();
 	}
@@ -1139,5 +1136,9 @@ public final class CardDesc /*extends AbstractMap<CardDescArg, Object>*/ impleme
 
 	public void setTargetSelectionOverride(TargetSelection targetSelectionOverride) {
 		this.targetSelectionOverride = targetSelectionOverride;
+	}
+
+	public EmoteMap getEmotes() {
+		return emotes;
 	}
 }
