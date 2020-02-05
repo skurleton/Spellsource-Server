@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Sets;
+import com.hiddenswitch.spellsource.client.models.Emotes;
 import net.demilich.metastone.game.GameContext;
 import net.demilich.metastone.game.Player;
 import net.demilich.metastone.game.actions.BattlecryAction;
@@ -161,7 +162,7 @@ public final class CardDesc /*extends AbstractMap<CardDescArg, Object>*/ impleme
 	public String[] secondPlayerBonusCards;
 	public TargetSelection targetSelectionOverride;
 	public ConditionDesc targetSelectionCondition;
-	public EmoteMap emotes;
+	public Emotes emotes;
 
 	public CardDesc() {
 		super();
@@ -1017,7 +1018,8 @@ public final class CardDesc /*extends AbstractMap<CardDescArg, Object>*/ impleme
 				immutableEntry(CardDescArg.COUNT_UNTIL_CAST, countUntilCast),
 				immutableEntry(CardDescArg.COUNT_BY_VALUE, countByValue),
 				immutableEntry(CardDescArg.QUEST, quest),
-				immutableEntry(CardDescArg.DYNAMIC_DESCRIPTION, dynamicDescription)
+				immutableEntry(CardDescArg.DYNAMIC_DESCRIPTION, dynamicDescription),
+				immutableEntry(CardDescArg.EMOTES, emotes)
 		);
 		return entries;
 	}
@@ -1138,7 +1140,7 @@ public final class CardDesc /*extends AbstractMap<CardDescArg, Object>*/ impleme
 		this.targetSelectionOverride = targetSelectionOverride;
 	}
 
-	public EmoteMap getEmotes() {
+	public Emotes getEmotes() {
 		return emotes;
 	}
 }

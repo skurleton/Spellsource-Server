@@ -180,5 +180,9 @@ public enum ParseValueType {
 	/**
 	 * An array of {@link net.demilich.metastone.game.cards.dynamicdescription.DynamicDescriptionDesc} objects.
 	 */
-	DYNAMIC_DESCRIPTION_ARRAY
+	DYNAMIC_DESCRIPTION_ARRAY,
+	/**
+	 * A bunch of emote dialogue {@link com.hiddenswitch.spellsource.client.models.Emotes}
+	 */
+	EMOTES
 }

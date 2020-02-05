@@ -645,12 +645,103 @@ definitions:
       message:
         type: 'string'
         enum:
+          - 'OPENER'
+          - 'MIRROR_OPENER'
           - 'HELLO'
-          - 'AMAZING'
-          - 'WHOOPS'
-          - 'GOOD_GAME'
-          - 'FACE_MY_WRATH'
+          - 'MIRROR_HELLO'
           - 'WELL_PLAYED'
+          - 'GOOD_GAME'
+          - 'THANKS'
+          - 'SORRY'
+          - 'WOW'
+          - 'OOPS'
+          - 'THREATEN'
+          - 'ATTACK'
+          - 'CONCEDE'
+          - 'THINKING_1'
+          - 'THINKING_2'
+          - 'THINKING_3'
+          - 'OUT_OF_TIME'
+          - 'ALMOST_OUT_OF_CARDS'
+          - 'OUT_OF_CARDS'
+          - 'ERROR_TOO_MANY_MINIONS'
+          - 'ERROR_GENERIC'
+          - 'ERROR_HAND_TOO_FULL'
+          - 'ERROR_CHAMPION_ALREADY_ATTACKED'
+          - 'ERROR_MINION_NOT_READY'
+          - 'ERROR_MINION_ALREADY_ATTACKED'
+          - 'ERROR_NOT_ENOUGH_LUN'
+          - 'ERROR_NEED_A_WEAPON'
+          - 'ERROR_CANT_TARGET_HIDDEN'
+          - 'ERROR_NOT_VALID_TARGET'
+          - 'ERROR_MUST_ATTACK_A_GUARD'
+          - 'DEATH'
+  Emotes:
+    description: |
+      The lines of dialogue that champions use for their emotes
+    properties:
+      opener:
+        type: 'string'
+      mirrorOpener:
+        type: 'string'
+      hello:
+        type: 'string'
+      mirrorHello:
+        type: 'string'
+      wellPlayed:
+        type: 'string'
+      goodGame:
+        type: 'string'
+      thanks:
+        type: 'string'
+      sorry:
+        type: 'string'
+      wow:
+        type: 'string'
+      oops:
+        type: 'string'
+      threaten:
+        type: 'string'
+      attack:
+        type: 'string'
+      concede:
+        type: 'string'
+      thinking1:
+        type: 'string'
+      thinking2:
+        type: 'string'
+      thinking3:
+        type: 'string'
+      outOfTime:
+        type: 'string'
+      almostOutOfCards:
+        type: 'string'
+      outOfCards:
+        type: 'string'
+      genericError:
+        type: 'string'
+      tooManyMinions:
+        type: 'string'
+      handTooFull:
+        type: 'string'
+      championAlreadyAttacked:
+        type: 'string'
+      minionNotReady:
+        type: 'string'
+      minionAlreadyAttacked:
+        type: 'string'
+      notEnoughLun:
+        type: 'string'
+      needAWeapon:
+        type: 'string'
+      cantTargetHidden:
+        type: 'string'
+      notValidTarget:
+        type: 'string'
+      mustAttackGuard:
+        type: 'string'
+      death:
+        type: 'string'
   Timers:
     description: |
       Information about timers. This helps the client render the countdown clock.
@@ -1712,6 +1803,8 @@ definitions:
         type: 'array'
         items:
           type: 'string'
+      emotes:
+        $ref: '#/definitions/Emotes'
   DraftsChooseCardRequest:
     type: 'object'
     required:

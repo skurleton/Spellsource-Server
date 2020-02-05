@@ -73,6 +73,7 @@ Name | Type | Description | Notes
 **color** | **List&lt;Float&gt;** | The color for the class  |  [optional]
 **blackText** | **Boolean** | Whether the class should use black text instead of the default white  |  [optional]
 **cardSets** | **List&lt;String&gt;** | The card sets listed by the card  |  [optional]
+**emotes** | [**Emotes**](Emotes.md) |  |  [optional]
 
 
 <a name="EntityTypeEnum"></a>

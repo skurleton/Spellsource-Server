@@ -2,6 +2,7 @@ package com.hiddenswitch.spellsource.net;
 
 import co.paralleluniverse.fibers.Suspendable;
 import com.hiddenswitch.spellsource.client.models.CardRecord;
+import com.hiddenswitch.spellsource.client.models.Entity;
 import com.hiddenswitch.spellsource.net.concurrent.SuspendableMap;
 import com.hiddenswitch.spellsource.net.models.*;
 import io.opentracing.Scope;
@@ -127,7 +128,13 @@ public interface Cards {
 							&& cd.type != CardType.HERO_POWER
 							&& cd.type != CardType.ENCHANTMENT)
 					.map(CardDesc::create)
-					.map(card -> Games.getEntity(workingContext, card, 0))
+					.map(card -> {
+						Entity entity = Games.getEntity(workingContext, card, 0);
+						if (card.getDesc().getEmotes() != null) {
+							entity.emotes(card.getDesc().getEmotes());
+						}
+						return entity;
+					})
 					.map(entity -> {
 						// Don't waste space storing locations on these
 						entity.l(null);

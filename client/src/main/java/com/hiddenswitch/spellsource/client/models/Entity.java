@@ -17,6 +17,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.hiddenswitch.spellsource.client.models.Emotes;
 import com.hiddenswitch.spellsource.client.models.EntityLocation;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -376,6 +377,9 @@ public class Entity implements Serializable {
 
   @JsonProperty("cardSets")
   private List<String> cardSets = null;
+
+  @JsonProperty("emotes")
+  private Emotes emotes = null;
 
   public Entity id(Integer id) {
     this.id = id;
@@ -1635,6 +1639,24 @@ public class Entity implements Serializable {
     this.cardSets = cardSets;
   }
 
+  public Entity emotes(Emotes emotes) {
+    this.emotes = emotes;
+    return this;
+  }
+
+   /**
+   * Get emotes
+   * @return emotes
+  **/
+  @ApiModelProperty(value = "")
+  public Emotes getEmotes() {
+    return emotes;
+  }
+
+  public void setEmotes(Emotes emotes) {
+    this.emotes = emotes;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -1713,12 +1735,13 @@ public class Entity implements Serializable {
         Objects.equals(this.gameStarted, entity.gameStarted) &&
         Objects.equals(this.color, entity.color) &&
         Objects.equals(this.blackText, entity.blackText) &&
-        Objects.equals(this.cardSets, entity.cardSets);
+        Objects.equals(this.cardSets, entity.cardSets) &&
+        Objects.equals(this.emotes, entity.emotes);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, cardId, entityType, name, description, l, background, portrait, gold, boardPosition, owner, heroClass, baseHp, hp, durability, maxHp, baseAttack, attack, baseManaCost, manaCost, armor, destroyed, summoningSickness, frozen, uncensored, deflect, silenced, windfury, permanent, collectible, taunt, discarded, roasted, spellDamage, charge, rush, lifesteal, poisonous, enraged, battlecry, deathrattles, immune, divineShield, stealth, combo, overload, chooseOne, untargetableBySpells, cannotAttack, underAura, customRenderer, customData, playable, conditionMet, mana, maxMana, lockedMana, hostsTrigger, note, cardType, tribe, fires, countUntilCast, cardSet, rarity, gameStarted, color, blackText, cardSets);
+    return Objects.hash(id, cardId, entityType, name, description, l, background, portrait, gold, boardPosition, owner, heroClass, baseHp, hp, durability, maxHp, baseAttack, attack, baseManaCost, manaCost, armor, destroyed, summoningSickness, frozen, uncensored, deflect, silenced, windfury, permanent, collectible, taunt, discarded, roasted, spellDamage, charge, rush, lifesteal, poisonous, enraged, battlecry, deathrattles, immune, divineShield, stealth, combo, overload, chooseOne, untargetableBySpells, cannotAttack, underAura, customRenderer, customData, playable, conditionMet, mana, maxMana, lockedMana, hostsTrigger, note, cardType, tribe, fires, countUntilCast, cardSet, rarity, gameStarted, color, blackText, cardSets, emotes);
   }
 
 
@@ -1796,6 +1819,7 @@ public class Entity implements Serializable {
     sb.append("    color: ").append(toIndentedString(color)).append("\n");
     sb.append("    blackText: ").append(toIndentedString(blackText)).append("\n");
     sb.append("    cardSets: ").append(toIndentedString(cardSets)).append("\n");
+    sb.append("    emotes: ").append(toIndentedString(emotes)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -3,9 +3,13 @@ package net.demilich.metastone.game.cards.desc;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.base.CaseFormat;
+import com.hiddenswitch.spellsource.client.models.Emote;
+import com.hiddenswitch.spellsource.client.models.Emotes;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.jackson.DatabindCodec;
 import net.demilich.metastone.game.actions.ActionType;
@@ -399,6 +403,8 @@ public class ParseUtils {
 					zones[i] = Enum.valueOf(Zones.class, jsonData.get(i).asText());
 				}
 				return zones;
+			case EMOTES:
+				return ctxt.getDefaultPropertyFormat(Emotes.class);
 			default:
 				break;
 		}
