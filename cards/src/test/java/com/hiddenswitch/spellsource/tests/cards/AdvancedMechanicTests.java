@@ -400,11 +400,13 @@ public class AdvancedMechanicTests extends TestBase {
 			GameAction playWrath = ((HasChooseOneActions) wrath).playOptions()[0];
 			playWrath.setTarget(getSingleMinion(opponent.getMinions()));
 			context.performAction(player.getId(), playWrath);
+			assertEquals(1, opponent.getMinions().get(0).getHp());
 
 			validActions = context.getLogic().getValidActions(player.getId());
 			// This time it should just be the 'End Turn'
 			assertEquals(validActions.size(), 1);
 			assertEquals(player.getHand().getCount(), 0);
+			assertEquals(player.getMana(), 1);
 		});
 	}
 

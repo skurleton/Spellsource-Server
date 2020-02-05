@@ -2135,6 +2135,9 @@ public class GameLogic implements Cloneable, Serializable, IdFactory {
 	@Suspendable
 	public int getModifiedManaCost(Player player, Card card) {
 		int manaCost = card.getBaseManaCost();
+		if (card.hasAttribute(Attribute.INVOKED)) {
+			manaCost = card.getAttributeValue(Attribute.INVOKED);
+		}
 		if (card.getEntityLocation().equals(EntityLocation.UNASSIGNED)) {
 			return manaCost - card.getManaCostModification(context, player);
 		}
@@ -2156,6 +2159,8 @@ public class GameLogic implements Cloneable, Serializable, IdFactory {
 		}
 		manaCost -= card.getManaCostModification(context, player);
 		manaCost = MathUtils.clamp(manaCost, minValue, Integer.MAX_VALUE);
+
+		/*
 		if (canActivateInvokeKeyword(player, card)) {
 			if (card.hasAttribute(Attribute.AURA_INVOKE)) {
 				manaCost = card.getAttributeValue(Attribute.AURA_INVOKE);
@@ -2168,10 +2173,12 @@ public class GameLogic implements Cloneable, Serializable, IdFactory {
 		if (card.hasAttribute(Attribute.INVOKED)) {
 			manaCost = card.getAttributeValue(Attribute.INVOKED);
 		}
+		 */
+
 		return manaCost;
 	}
 
-	private boolean canActivateInvokeKeyword(Player player, Card card) {
+	public boolean canActivateInvokeKeyword(Player player, Card card) {
 		// Short circuit this costly computation
 		if (!card.hasAttribute(Attribute.INVOKE) && !card.hasAttribute(Attribute.AURA_INVOKE)) {
 			return false;
@@ -3045,10 +3052,11 @@ public class GameLogic implements Cloneable, Serializable, IdFactory {
 		List<CardCostInsteadAura> costAuras = SpellUtils.getAuras(context, playerId, CardCostInsteadAura.class);
 		boolean cardCostOverridden = costAuras.size() > 0 && costAuras.stream().anyMatch(aura -> aura.getAffectedEntities().contains(cardReference.getId()));
 
-		// The modified mana cost already reflects the invoke cost
+		/* The modified mana cost already reflects the invoke cost
 		if (canActivateInvokeKeyword(player, card)) {
 			card.setAttribute(Attribute.INVOKED, modifiedManaCost);
 		}
+		*/
 
 		if (cardCostOverridden) {
 			context.getEnvironment().put(Environment.LAST_MANA_COST, 0);

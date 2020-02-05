@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import net.demilich.metastone.game.GameContext;
 import net.demilich.metastone.game.Player;
 import net.demilich.metastone.game.actions.*;
+import net.demilich.metastone.game.cards.Attribute;
 import net.demilich.metastone.game.cards.Card;
 import net.demilich.metastone.game.cards.ChooseOneOverride;
 import net.demilich.metastone.game.entities.Entity;
@@ -111,7 +112,8 @@ public class ActionLogic implements Serializable {
 				continue;
 			}
 
-			if (card.isChooseOne()) {
+			if (card.isChooseOne() && (!(card.hasAttribute(Attribute.INVOKE) || card.hasAttribute(Attribute.AURA_INVOKE)) ||
+					context.getLogic().canActivateInvokeKeyword(player, card))) {
 				rolloutChooseOnesWithOverrides(context, player, playCardActions, card);
 			} else {
 				card.processTargetSelectionOverride(context, player);
@@ -139,6 +141,9 @@ public class ActionLogic implements Serializable {
 				for (PlayCardAction action : card.playOptions()) {
 					rollout(action, context, player, playCardActions);
 				}
+				/*
+				InvokeAura stuff
+				 */
 				break;
 		}
 	}

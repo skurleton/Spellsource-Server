@@ -3,6 +3,7 @@ package net.demilich.metastone.game.actions;
 import co.paralleluniverse.fibers.Suspendable;
 import net.demilich.metastone.game.GameContext;
 import net.demilich.metastone.game.Player;
+import net.demilich.metastone.game.cards.Attribute;
 import net.demilich.metastone.game.cards.Card;
 import net.demilich.metastone.game.cards.CardCatalogue;
 import net.demilich.metastone.game.entities.Entity;
@@ -24,6 +25,16 @@ public class PlayChooseOneCardAction extends PlayCardAction implements HasChoice
 		this.setSpell(spell);
 		setSourceReference(chooseOneCard.getReference());
 		this.chosenCard = chosenCard;
+	}
+
+	@Override
+	public void execute(GameContext context, int playerId) {
+		Card card = (Card) context.resolveSingleTarget(getSourceReference());
+		if (card.hasAttribute(Attribute.INVOKE)) {
+			Card invokeCard = context.getCardById(getChoiceCardId());
+			card.setAttribute(Attribute.INVOKED, invokeCard.getAttribute(Attribute.INVOKED));
+		}
+		super.execute(context, playerId);
 	}
 
 	@Override
