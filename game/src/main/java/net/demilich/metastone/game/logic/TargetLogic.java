@@ -17,6 +17,7 @@ import net.demilich.metastone.game.environment.Environment;
 import net.demilich.metastone.game.spells.trigger.Enchantment;
 import net.demilich.metastone.game.spells.trigger.Trigger;
 import net.demilich.metastone.game.targeting.EntityReference;
+import net.demilich.metastone.game.targeting.TargetNotFoundException;
 import net.demilich.metastone.game.targeting.TargetSelection;
 import net.demilich.metastone.game.cards.Attribute;
 import net.demilich.metastone.game.targeting.Zones;
@@ -96,10 +97,10 @@ public class TargetLogic implements Serializable {
 	 * @param context   The current game context
 	 * @param targetKey A {@link EntityReference}
 	 * @return The found entity.
-	 * @throws NullPointerException If the entity isn't found.
+	 * @throws TargetNotFoundException If the entity isn't found.
 	 */
-	public Entity findEntity(GameContext context, EntityReference targetKey) throws NullPointerException {
-		final int targetId = targetKey.getId();
+	public Entity findEntity(GameContext context, EntityReference targetKey) throws TargetNotFoundException {
+		int targetId = targetKey.getId();
 		Entity environmentResult = findInEnvironment(context, targetKey);
 
 		if (environmentResult != null) {
@@ -118,7 +119,7 @@ public class TargetLogic implements Serializable {
 					return (Entity) trigger;
 				}
 			}
-			throw new NullPointerException("Target not found exception: " + targetKey);
+			throw new TargetNotFoundException("not found", targetKey);
 		}
 	}
 
