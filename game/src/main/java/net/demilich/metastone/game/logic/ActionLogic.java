@@ -7,6 +7,7 @@ import net.demilich.metastone.game.Player;
 import net.demilich.metastone.game.actions.*;
 import net.demilich.metastone.game.cards.Attribute;
 import net.demilich.metastone.game.cards.Card;
+import net.demilich.metastone.game.cards.CardType;
 import net.demilich.metastone.game.cards.ChooseOneOverride;
 import net.demilich.metastone.game.entities.Entity;
 import net.demilich.metastone.game.entities.heroes.Hero;
@@ -126,6 +127,11 @@ public class ActionLogic implements Serializable {
 
 	private void rolloutChooseOnesWithOverrides(GameContext context, Player player, List<GameAction> playCardActions, Card card) {
 		ChooseOneOverride override = context.getLogic().getChooseOneAuraOverrides(player, card);
+		if (card.getCardType() == CardType.MINION && !context.getLogic().canActivateInvokeKeyword(player, card)) {
+			card.processTargetSelectionOverride(context, player);
+			rollout(card.play(), context, player, playCardActions);
+			return;
+		}
 		switch (override) {
 			case BOTH_COMBINED:
 				rollout(card.playBothOptions(), context, player, playCardActions);

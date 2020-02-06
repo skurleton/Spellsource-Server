@@ -1,10 +1,10 @@
 {
-  "name": "Rummage",
-  "baseManaCost": 3,
+  "name": "Tireless Study",
+  "baseManaCost": 7,
   "type": "SPELL",
   "heroClass": "EGGPLANT",
-  "rarity": "COMMON",
-  "description": "Copy two random cards from your deck. Invoke (7): Copy four.",
+  "rarity": "FREE",
+  "description": "Copy four random cards from your deck.",
   "targetSelection": "NONE",
   "spell": {
     "class": "MetaSpell",
@@ -18,17 +18,23 @@
         "class": "CopyCardSpell",
         "target": "FRIENDLY_DECK",
         "randomTarget": true
+      },
+      {
+        "class": "CopyCardSpell",
+        "target": "FRIENDLY_DECK",
+        "randomTarget": true
+      },
+      {
+        "class": "CopyCardSpell",
+        "target": "FRIENDLY_DECK",
+        "randomTarget": true
       }
     ]
   },
-  "chooseOneCardIds": [
-    "spell_rummage_1",
-    "spell_rummage_2"
-  ],
   "attributes": {
     "INVOKE": 7
   },
-  "collectible": true,
+  "collectible": false,
   "set": "CUSTOM",
   "fileFormatVersion": 1
 }

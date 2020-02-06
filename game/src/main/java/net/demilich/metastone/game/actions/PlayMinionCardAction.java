@@ -57,6 +57,16 @@ public final class PlayMinionCardAction extends PlayCardAction implements HasBat
 	}
 
 	@Override
+	public void execute(GameContext context, int playerId) {
+		Card card = (Card) context.resolveSingleTarget(getSourceReference());
+		if (battlecry != null && battlecry.getName().contains("Invoke (")) {
+			String cost = battlecry.getName().substring(battlecry.getName().indexOf("(") + 1).split("\\)")[0];
+			card.setAttribute(Attribute.INVOKED, Integer.parseInt(cost));
+		}
+		super.execute(context, playerId);
+	}
+
+	@Override
 	@Suspendable
 	public void innerExecute(GameContext context, int playerId) {
 		Card card = (Card) context.resolveSingleTarget(getSourceReference());

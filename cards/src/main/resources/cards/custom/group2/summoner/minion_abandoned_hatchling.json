@@ -8,24 +8,33 @@
   "rarity": "COMMON",
   "race": "BEAST",
   "description": "Invoke (6): Destroy a minion and summon a 1/1 Hatchling.",
-  "battlecry": {
-    "condition": {
-      "class": "InvokeCondition"
+  "chooseOneBattlecries": [
+    {
+      "name": "Don't Invoke",
+      "description": "Do nothing",
+      "targetSelection": "NONE",
+      "spell": {
+        "class": "NullSpell"
+      }
     },
-    "targetSelection": "MINIONS",
-    "spell": {
-      "class": "MetaSpell",
-      "spells": [
-        {
-          "class": "DestroySpell"
-        },
-        {
-          "class": "SummonSpell",
-          "card": "minion_abandoned_hatchling"
-        }
-      ]
+    {
+      "name": "Invoke (6)",
+      "description": "Destroy a minion and summon a 1/1 Hatchling.",
+      "targetSelection": "MINIONS",
+      "spell": {
+        "class": "MetaSpell",
+        "spells": [
+          {
+            "class": "DestroySpell"
+          },
+          {
+            "class": "SummonSpell",
+            "card": "minion_abandoned_hatchling"
+          }
+        ]
+      }
     }
-  },
+  ],
   "attributes": {
     "INVOKE": 6
   },

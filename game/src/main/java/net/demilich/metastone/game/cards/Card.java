@@ -527,7 +527,7 @@ public class Card extends Entity implements HasChooseOneActions, HasDeathrattleE
 	 */
 	@Suspendable
 	public PlayCardAction play() {
-		if (hasChoices()) {
+		if (hasChoices() && !hasAttribute(Attribute.INVOKE)) {
 			throw new UnsupportedOperationException("Use the choices interfaces instead.");
 		}
 		switch (getCardType()) {

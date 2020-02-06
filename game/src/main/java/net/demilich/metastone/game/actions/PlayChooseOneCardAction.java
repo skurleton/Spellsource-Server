@@ -32,7 +32,7 @@ public class PlayChooseOneCardAction extends PlayCardAction implements HasChoice
 		Card card = (Card) context.resolveSingleTarget(getSourceReference());
 		if (card.hasAttribute(Attribute.INVOKE)) {
 			Card invokeCard = context.getCardById(getChoiceCardId());
-			card.setAttribute(Attribute.INVOKED, invokeCard.getAttribute(Attribute.INVOKED));
+			card.setAttribute(Attribute.INVOKED, invokeCard.getAttribute(Attribute.INVOKE));
 		}
 		super.execute(context, playerId);
 	}

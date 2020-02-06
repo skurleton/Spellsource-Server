@@ -27,6 +27,7 @@ import net.demilich.metastone.tests.util.TestSpellCard;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -718,4 +719,58 @@ public class AdvancedMechanicTests extends TestBase {
 			assertFalse(context.getValidActions().stream().anyMatch(a -> Objects.equals(a.getSourceReference(), card.getReference())));
 		});
 	}
+
+	@Test
+	public void testNewInvoke() {
+		for (boolean invokeIt : Arrays.asList(true, false)) {
+			runGym((context, player, opponent) -> {
+				for (int i = 0; i < 4; i++) {
+					shuffleToDeck(context, player, "minion_neutral_test");
+				}
+				player.getHero().getHeroPower().markUsed();
+				receiveCard(context, player, "spell_rummage");
+				player.setMana(3);
+				assertEquals(1, context.getLogic().getValidActions(player.getId()).size() - 1); // - 1 because end turn
+				player.setMana(7);
+				assertEquals(2, context.getLogic().getValidActions(player.getId()).size() - 1); // - 1 because end turn
+
+				if (invokeIt) {
+					context.performAction(player.getId(), context.getLogic().getValidActions(player.getId()).get(1));
+					assertEquals(4, player.getHand().size());
+					assertEquals(0, player.getMana());
+				} else {
+					context.performAction(player.getId(), context.getLogic().getValidActions(player.getId()).get(0));
+					assertEquals(2, player.getHand().size());
+					assertEquals(4, player.getMana());
+				}
+			});
+		}
+
+		for (boolean invokeIt : Arrays.asList(true, false)) {
+			runGym((context, player, opponent) -> {
+				player.getHero().getHeroPower().markUsed();
+				receiveCard(context, player, "minion_abandoned_hatchling");
+				Minion enemy = playMinionCard(context, opponent, "minion_neutral_test");
+				player.setMana(0);
+				assertEquals(1, context.getLogic().getValidActions(player.getId()).size() - 1); // - 1 because end turn
+				player.setMana(6);
+				assertEquals(2, context.getLogic().getValidActions(player.getId()).size() - 1); // - 1 because end turn
+
+				if (invokeIt) {
+					GameAction action = context.getLogic().getValidActions(player.getId()).get(1);
+					action.setTarget(enemy);
+					context.performAction(player.getId(), action);
+					assertEquals(2, player.getMinions().size());
+					assertEquals(0, opponent.getMinions().size());
+					assertEquals(0, player.getMana());
+				} else {
+					context.performAction(player.getId(), context.getLogic().getValidActions(player.getId()).get(0));
+					assertEquals(1, player.getMinions().size());
+					assertEquals(1, opponent.getMinions().size());
+					assertEquals(6, player.getMana());
+				}
+			});
+		}
+	}
+
 }
