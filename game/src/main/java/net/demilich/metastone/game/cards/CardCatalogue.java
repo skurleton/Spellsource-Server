@@ -34,6 +34,7 @@ import java.util.stream.Stream;
 public class CardCatalogue {
 	private static Map<String, Card> classCards;
 	private static Map<String, Card> heroCards;
+	private static Map<String, Card> formatCards;
 	private static LoadingCache<DeckFormat, CardList> classCardsForFormat;
 	private static LoadingCache<DeckFormat, List<String>> baseClassesForFormat;
 
@@ -281,9 +282,10 @@ public class CardCatalogue {
 				}
 			});
 			DeckFormat.populateAll(sets);
-			DeckFormat.populateFormats(new CardArrayList(cards.values().stream()
-					.filter(card -> card.getCardType() == CardType.FORMAT).collect(Collectors.toList())));
-
+			CardList formats = cards.values().stream()
+					.filter(card -> card.getCardType() == CardType.FORMAT).collect(Collectors.toCollection(CardArrayList::new));
+			DeckFormat.populateFormats(formats);
+			formatCards = formats.stream().collect(Collectors.toMap(Card::getName, Function.identity()));
 			// Populate the class and hero cards
 			classCards = cards.values().stream().filter(c -> c.getCardType() == CardType.CLASS).collect(Collectors.toMap(Card::getHeroClass, Function.identity()));
 			classCardsForFormat = CacheBuilder.newBuilder()
@@ -321,10 +323,21 @@ public class CardCatalogue {
 		}
 	}
 
+	public static Card getFormatCard(String name) {
+		return formatCards.getOrDefault(name, null);
+	}
+
 	public static Card getHeroCard(String heroClass) {
 		return heroCards.getOrDefault(heroClass, getCardById(CardCatalogue.getNeutralHero()));
 	}
 
+	/**
+	 * Retrieves all the "class_" {@link CardType#CLASS} cards that specify a hero card, color, heroClass string, etc. for
+	 * the specified class in the specified format.
+	 *
+	 * @param format
+	 * @return
+	 */
 	public static CardList getClassCards(DeckFormat format) {
 		try {
 			return classCardsForFormat.get(format);
@@ -333,6 +346,13 @@ public class CardCatalogue {
 		}
 	}
 
+	/**
+	 * Retrieves the {@link net.demilich.metastone.game.entities.heroes.HeroClass} strings that correspond to the classes
+	 * in the specified format.
+	 *
+	 * @param deckFormat
+	 * @return
+	 */
 	public static List<String> getBaseClasses(DeckFormat deckFormat) {
 		try {
 			return baseClassesForFormat.get(deckFormat);

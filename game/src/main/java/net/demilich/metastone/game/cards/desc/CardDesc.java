@@ -34,6 +34,8 @@ import net.demilich.metastone.game.spells.trigger.EventTrigger;
 import net.demilich.metastone.game.targeting.EntityReference;
 import net.demilich.metastone.game.targeting.TargetSelection;
 import net.demilich.metastone.game.targeting.Zones;
+import net.demilich.metastone.game.cards.Attribute;
+import net.demilich.metastone.game.cards.AttributeMap;
 
 import java.io.Serializable;
 import java.util.*;
@@ -195,6 +197,12 @@ public final class CardDesc /*extends AbstractMap<CardDescArg, Object>*/ impleme
 		BattlecryAction battlecryAction = BattlecryAction.createBattlecry(getBattlecry().getSpell(), getBattlecry().getTargetSelection());
 		if (getBattlecry().getCondition() != null) {
 			battlecryAction.setCondition(getBattlecry().getCondition().create());
+		}
+		if (getBattlecry().getTargetSelectionOverride() != null) {
+			battlecryAction.setTargetSelectionOverride(getBattlecry().getTargetSelectionOverride());
+		}
+		if (getBattlecry().getTargetSelectionCondition() != null) {
+			battlecryAction.setTargetSelectionCondition(getBattlecry().getTargetSelectionCondition().create());
 		}
 		return battlecryAction;
 	}
@@ -1019,6 +1027,8 @@ public final class CardDesc /*extends AbstractMap<CardDescArg, Object>*/ impleme
 				immutableEntry(CardDescArg.COUNT_BY_VALUE, countByValue),
 				immutableEntry(CardDescArg.QUEST, quest),
 				immutableEntry(CardDescArg.DYNAMIC_DESCRIPTION, dynamicDescription),
+				immutableEntry(CardDescArg.TARGET_SELECTION_OVERRIDE, targetSelectionOverride),
+				immutableEntry(CardDescArg.TARGET_SELECTION_CONDITION, targetSelectionCondition),
 				immutableEntry(CardDescArg.EMOTES, emotes)
 		);
 		return entries;
