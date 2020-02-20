@@ -1131,7 +1131,12 @@ public enum Attribute {
 	 * This is only really used for one Trader card right now, but it seemed like a useful one to add for future cards and
 	 * their effects.
 	 */
-	DISCOVER;
+	DISCOVER,
+
+	/**
+	 * Temporary attribute used for testing Signature effects
+	 */
+	SIGNATURE;
 
 	public String toKeyCase() {
 		return ParseUtils.toCamelCase(this.toString());
